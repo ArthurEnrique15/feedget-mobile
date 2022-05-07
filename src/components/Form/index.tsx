@@ -49,7 +49,7 @@ export function Form({ feedbackType }: FormProps) {
       
       <View style={styles.footer}>
         <ScreenshotButton 
-          screenshot={''}
+          screenshot={'https://github.com/ArthurEnrique15.png'}
           onTakeShot={() => {}}
           onRemoveShot={() => {}}
         />
