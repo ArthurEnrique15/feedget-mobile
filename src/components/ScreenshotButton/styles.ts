@@ -8,8 +8,9 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: theme.colors.surface_secondary,
     justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 8,
-    position: 'absolute',
+    position: 'relative',
   },
   removeIcon: {
     position: 'absolute',
