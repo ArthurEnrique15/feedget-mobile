@@ -5,8 +5,13 @@ import { feedbackTypes } from '../../utils/feedbackTypes';
 import { Option } from '../Option';
 import { Copyright } from '../Copyright';
 import { styles } from './styles';
+import { FeedbackType } from '../Widget';
 
-export function Options() {
+interface OptionsProps {
+  onFeedbackTypeChange: (feedbackType: FeedbackType) => void;
+}
+
+export function Options({ onFeedbackTypeChange }: OptionsProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Deixe seu feedback</Text>
@@ -17,6 +22,7 @@ export function Options() {
               key={key}
               title={value.title}
               image={value.image}
+              onPress={() => onFeedbackTypeChange(key as FeedbackType)}
             />
           )) 
         }
