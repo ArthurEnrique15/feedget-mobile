@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { captureScreen } from 'react-native-view-shot'
+import * as FileSystem from 'expo-file-system'
 
+import { api } from '../../libs/api';
 import { theme } from '../../theme';
 import { feedbackTypes } from '../../utils/feedbackTypes';
 import { Button } from '../Button';
@@ -24,7 +26,9 @@ interface FormProps {
 }
 
 export function Form({ feedbackType, onFeedbackCancelled, onFeedbackSent }: FormProps) {
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false)
   const [screenshot, setScreenshot] = useState<string | null>(null)
+  const [comment, setComment] = useState('')
 
   const feedbackTypeInfo = feedbackTypes[feedbackType]
 
@@ -39,6 +43,32 @@ export function Form({ feedbackType, onFeedbackCancelled, onFeedbackSent }: Form
 
   function handleScreenshotRemove() {
     setScreenshot(null)
+  }
+
+  async function handleSendFeedback() {
+    if (isSendingFeedback) return;
+
+    setIsSendingFeedback(true)
+
+    const screenshotBase64 = screenshot && await FileSystem.readAsStringAsync(screenshot, { encoding: 'base64'}) 
+
+    try {
+      const response = await api.post('/feedbacks', {
+        type: feedbackType,
+        comment,
+        screenshot: `data:image/png;base64, ${screenshotBase64}`
+      })
+
+      console.log(response)
+
+      onFeedbackSent()
+
+      console.log('enviou')
+
+    } catch(err) {
+      console.log(err)
+      setIsSendingFeedback(false)
+    }
   }
 
   return (
@@ -65,6 +95,7 @@ export function Form({ feedbackType, onFeedbackCancelled, onFeedbackSent }: Form
         placeholder="Algo não está funcionando bem? Queremos corrigir. Conte com detalhes o que está acontecendo..."
         placeholderTextColor={theme.colors.text_secondary}
         autoCorrect={false}
+        onChangeText={setComment}
       />
       
       <View style={styles.footer}>
@@ -75,7 +106,8 @@ export function Form({ feedbackType, onFeedbackCancelled, onFeedbackSent }: Form
         />
 
         <Button 
-          isLoading={false}
+          onPress={handleSendFeedback}
+          isLoading={isSendingFeedback}
         />
       </View>
 
