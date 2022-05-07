@@ -38,11 +38,9 @@ function Widget() {
         backgroundStyle={styles.modal}
         handleIndicatorStyle={styles.indicator}
       >
-        {/* <Form 
+        <Form 
           feedbackType="BUG"
-        /> */}
-
-        <Success/>
+        />
       </BottomSheet>
     </>
   );
