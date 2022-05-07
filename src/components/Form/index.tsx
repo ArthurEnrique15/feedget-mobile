@@ -59,8 +59,6 @@ export function Form({ feedbackType, onFeedbackCancelled, onFeedbackSent }: Form
         screenshot: `data:image/png;base64, ${screenshotBase64}`
       })
 
-      console.log(response)
-
       onFeedbackSent()
 
       console.log('enviou')
