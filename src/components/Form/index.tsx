@@ -10,6 +10,7 @@ import {
 
 import { theme } from '../../theme';
 import { feedbackTypes } from '../../utils/feedbackTypes';
+import { ScreenshotButton } from '../ScreenshotButton';
 import { FeedbackType } from '../Widget';
 import { styles } from './styles';
 
@@ -43,10 +44,15 @@ export function Form({ feedbackType }: FormProps) {
         style={styles.input}
         placeholder="Algo não está funcionando bem? Queremos corrigir. Conte com detalhes o que está acontecendo..."
         placeholderTextColor={theme.colors.text_secondary}
-      >
-
-
-      </TextInput>
+      />
+      
+      <View style={styles.footer}>
+        <ScreenshotButton 
+          screenshot={''}
+          onTakeShot={() => {}}
+          onRemoveShot={() => {}}
+        />
+      </View>
 
     </View>
   );
